@@ -2,6 +2,9 @@ package com.prubas.unitarias.service;
 
 import com.prubas.unitarias.model.Mascota;
 import com.prubas.unitarias.repository.MascotasRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +39,10 @@ public class MascotaService {
     }
 
     public void eliminarMascota(Long id) {
+        if (!mascotasRepository.existsById(id)) {
+            throw new EntityNotFoundException("Mascota no encontrada con id: " + id);
+        }
         mascotasRepository.deleteById(id);
     }
+    
 }
